@@ -66,9 +66,9 @@ $(document).on 'page:change', ->
 
 # Also listen to wiselinks page always event
 $(document).ajaxStart (event, xhr, ajaxOptions) ->
-  if xhr.getResponseHeader 'X-Wiselinks-URL'
+  if ajaxOptions.headers['X-Wiselinks']
     $(this).trigger('peek:start')
-    
+
 $(document).ajaxSuccess (event, xhr, ajaxOptions) ->
   if xhr.getResponseHeader 'X-Wiselinks-URL'
     requestId = xhr.getResponseHeader 'X-Request-Id'
