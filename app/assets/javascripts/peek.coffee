@@ -65,12 +65,17 @@ $(document).on 'page:change', ->
     $(this).trigger 'peek:update'
 
 # Also listen to wiselinks page always event
+$(document).ajaxStart (event, xhr, ajaxOptions) ->
+  if xhr.getResponseHeader 'X-Wiselinks-URL'
+    $(this).trigger('peek:start')
+    
 $(document).ajaxSuccess (event, xhr, ajaxOptions) ->
   if xhr.getResponseHeader 'X-Wiselinks-URL'
     requestId = xhr.getResponseHeader 'X-Request-Id'
 
     if peekEnabled()
       $(this).trigger 'peek:update'
+      $(this).trigger('peek:end')
 
 $ ->
   if peekEnabled()
